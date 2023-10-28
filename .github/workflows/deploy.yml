@@ -28,7 +28,15 @@ jobs:
         with:
           path: ./.venv
           key: venv-${{ hashFiles('poetry.lock') }}
-      - name: Install the project dependencies
+      - name: Install Python dependencies
         run: poetry install
       - name: Build files from sources
         run: poetry run python main.py --ignored-dirs '.obsidian,.git' --verbose sources . build templates
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install Node dependencies
+        run: npm ci
+      - name: Build static files
+        run: npm run docs:build
