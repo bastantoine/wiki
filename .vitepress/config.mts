@@ -7,6 +7,7 @@ export default defineConfig({
   title: "Wiki",
   description: "A personal wiki",
   srcDir: "./wiki",
+  base: "/wiki/",
   themeConfig: {
     sidebar: links,
     socialLinks: [
