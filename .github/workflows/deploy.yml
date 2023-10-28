@@ -24,7 +24,7 @@ jobs:
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
       - uses: actions/cache@v3
-        name: Define a cache for the virtual environment based on the dependencies lock file
+        name: Cache Python deps
         with:
           path: ./.venv
           key: venv-${{ hashFiles('poetry.lock') }}
@@ -38,6 +38,11 @@ jobs:
           node-version: 18
       - name: Install Node dependencies
         run: npm ci
+      - uses: actions/cache@v3
+        name: Cache Node deps
+        with:
+          path: ./node_modules
+          key: venv-${{ hashFiles('package-lock.json') }}
       - name: Prepare workspace
         run: |
           mv build wiki
