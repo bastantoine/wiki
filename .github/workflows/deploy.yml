@@ -31,4 +31,4 @@ jobs:
       - name: Install the project dependencies
         run: poetry install
       - name: Build files from sources
-        run: poetry run main.py --ignored-dirs '.obsidian,.git' --verbose sources . build templates
+        run: poetry run python main.py --ignored-dirs '.obsidian,.git' --verbose sources . build templates
