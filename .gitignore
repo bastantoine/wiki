@@ -1,6 +1,7 @@
 .vscode
+**/.DS_Store
 node_modules/**/*
 wiki/**/*
 .vitepress/cache/deps/**/*
-**/.DS_Store
 .vitepress/links.json
+.vitepress/dist/
