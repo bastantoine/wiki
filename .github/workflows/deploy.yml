@@ -38,5 +38,9 @@ jobs:
           node-version: 18
       - name: Install Node dependencies
         run: npm ci
+      - name: Prepare workspace
+        run: |
+          mv build wiki
+          mv wiki/links.json .vitepress/links.json
       - name: Build static files
         run: npm run docs:build
