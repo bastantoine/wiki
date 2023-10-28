@@ -161,7 +161,11 @@ class Processor:
         for dir in dirs:
             self.add_index_files(dir)
         if not any([item.name == "index.md" for item in files]):
-            copy(self.template_dir / "index.md.j2", dir_src / "index.md")
+            if dir_src == self.target_dir:
+                template_file = "root-index.md.j2"
+            else:
+                template_file = "index.md.j2"
+            copy(self.template_dir / template_file, dir_src / "index.md")
 
     def generate_links_config(self, dir_src: Path):
         def generate_links_config_of_item(item: Path, index: int) -> LinkConfig:
