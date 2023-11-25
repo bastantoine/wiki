@@ -16,9 +16,6 @@ export default defineConfig({
     footer: {
       message: 'Built using <a href="https://github.com/vuejs/vitepress">VitePress</a>. Released under the MIT License.',
       copyright: 'Copyright © 2019-present Bastien ANTOINE'
-    },
-    editLink: {
-      pattern: 'https://github.com/bastantoine/wiki/edit/main/:path'
     }
   }
 })
