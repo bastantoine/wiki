@@ -22,7 +22,7 @@ const recursiveGetGroups = (groupItem, groups) => {
   groups[link] = []
   if (groupItem.items) {
     for (let childItem of groupItem.items) {
-      groups[link].push({ text: childItem.text, link: childItem.link })
+      groups[link].push({ text: childItem.text, link: withBase(childItem.link) })
       if (childItem.items) {
         recursiveGetGroups(childItem, groups)
       }
