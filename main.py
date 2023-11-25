@@ -8,6 +8,7 @@ from shutil import copy, rmtree
 
 import frontmatter
 import typer
+from jinja2 import Environment, FileSystemLoader
 from loguru import logger
 from slugify import slugify
 
@@ -319,6 +320,12 @@ class Processor:
             self.process_citations,
         ]:
             content = f(content, file)
+
+        if file.name != "index.md":
+            # Use base template for all files except for index files which have their own templates
+            environment = Environment(loader=FileSystemLoader(self.template_dir))
+            template = environment.get_template("base.md.j2")
+            content = template.render(content=content)
 
         post.content = content
         with open(file, "w") as f:
