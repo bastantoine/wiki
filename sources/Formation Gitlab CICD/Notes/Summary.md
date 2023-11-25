@@ -8,7 +8,7 @@ https://www.youtube.com/playlist?list=PLn6POgpklwWrRoZZXv0xf71mvT4E0QDOF
 - gitlab CE vs EE
 	- préciser que la formation ne sera que sur CE
 		- la CE couvre déjà suffisament de points pour s'amuser pendant un moment
-- runners and executors : [[Gitlab runners and executors]]
+- runners and executors : [[Formation Gitlab CICD/Notes/Gitlab runners and executors]]
 - variables
 	- précédence
 - architectures
@@ -32,5 +32,5 @@ xavki
 		- possibilité d'installer des softs supplémentaires nécessaires pour l'execution des jobs (npm, docker, ansible, kubectl...)
 		- tagging pour indentifier les spécificités des runners
 		- scope du runner (shared vs group vs project)
-		- Cf [[Gitlab runners and executors]]
+		- Cf [[Formation Gitlab CICD/Notes/Gitlab runners and executors]]
 	- executor : type de runner adapté au job (ssh, docker, shell, k8s...)

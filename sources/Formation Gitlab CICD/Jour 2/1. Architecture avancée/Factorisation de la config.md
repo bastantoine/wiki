@@ -44,10 +44,10 @@ Les paramètres pouvant être définis au niveau global sont :
 
 ## Héritage de jobs
 Plusieurs manières sont possibles pour faire en sorte qu'un job hérite d'un autre :
-1. À l'aide des [[Formation Gitlab CICD/Jour 2/1. Architecture avancée/Factorisation de la config#Références YAML | références YAML]]
-2. À l'aide du [[Formation Gitlab CICD/Jour 2/1. Architecture avancée/Factorisation de la config#Utilisation du keyword `extends` | keyword `extends`]]
-3. À l'aide du [[Formation Gitlab CICD/Jour 2/1. Architecture avancée/Factorisation de la config#Utilisation du tag `!reference` | tag `!reference`]]
-4. À l'aide d'[[Formation Gitlab CICD/Jour 2/1. Architecture avancée/Factorisation de la config#Inclusions externes | inclusions externes]]
+1. À l'aide des [[Formation Gitlab CICD/Jour 2/1. Architecture avancée/Factorisation de la config#Références YAML| références YAML]]
+2. À l'aide du [[Formation Gitlab CICD/Jour 2/1. Architecture avancée/Factorisation de la config#Utilisation du keyword `extends`| keyword `extends`]]
+3. À l'aide du [[Formation Gitlab CICD/Jour 2/1. Architecture avancée/Factorisation de la config#Utilisation du tag `!reference`| tag `!reference`]]
+4. À l'aide d'[[Formation Gitlab CICD/Jour 2/1. Architecture avancée/Factorisation de la config#Inclusions externes| inclusions externes]]
 
 ### Références YAML
 Le langage YAML propose une fonctionnalité de références, permettant de faire référence à certaines portions d'un fichier YAML au sein du même fichier, afin de les réutiliser à différents endroits.

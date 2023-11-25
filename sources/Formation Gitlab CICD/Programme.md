@@ -31,7 +31,7 @@ Cette formation s'adresse aux développeurs, devops et architectes qui utilisent
 
 ## Contenu
 
-- [[Formation Gitlab CICD/Jour 1/0. Sommaire | Jour 1]] : Intro à la CICD et les bases de Gitlab CICD
+- [[Formation Gitlab CICD/Jour 1/0. Sommaire| Jour 1]] : Intro à la CICD et les bases de Gitlab CICD
 	1. Qu'est-ce qu'une chaine de CICD ?
 	2. Architecture de base des pipelines Gitlab CICD
 		1. stages,
@@ -42,7 +42,7 @@ Cette formation s'adresse aux développeurs, devops et architectes qui utilisent
 		2. images,
 		3. variables,
 		4. artefacts...
-- [[Formation Gitlab CICD/Jour 2/0. Sommaire | Jour 2]] : Concepts avancés
+- [[Formation Gitlab CICD/Jour 2/0. Sommaire| Jour 2]] : Concepts avancés
 	1. Runner executors
 	2. Architecture avancée
 		1. dépendances inter-jobs,
