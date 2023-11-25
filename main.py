@@ -71,7 +71,7 @@ class Processor:
 
         if self.format:
             logger.info("Processing markdown of files")
-            self.process_markdown_files(self.target_dir, self.target_dir)
+            self.process_markdown_files(self.target_dir)
 
     def clean_filenames(self, dir: Path):
         for child in dir.iterdir():
@@ -309,15 +309,30 @@ class Processor:
             offset += 1
         return "\n".join(lines)
 
-    def process_markdown_file(self, file: Path, base_dir: Path):
+    def process_headers(self, content: str, filepath: Path | str) -> str:
+        if content.find("#") == -1:
+            # No headers in the file, no need to go any further
+            return content
+
+        if filepath.name == "index.md":
+            return content
+
+        lines = content.split("\n")
+        for index, line in enumerate(lines):
+            vals = line.split()
+            if vals and (val := vals[0]) and val.startswith("#"):
+                lines[index] = f"#{line}"
+        return "\n".join(lines)
+
+    def process_markdown_file(self, file: Path):
         with open(file) as f:
             post = frontmatter.load(f)
         content = post.content
 
-        # file = str(file.relative_to(base_dir))
         for f in [
             self.process_links,
             self.process_citations,
+            self.process_headers,
         ]:
             content = f(content, file)
 
@@ -331,12 +346,12 @@ class Processor:
         with open(file, "w") as f:
             f.write(frontmatter.dumps(post))
 
-    def process_markdown_files(self, dir: Path, base_dir: Path):
+    def process_markdown_files(self, dir: Path):
         for child in dir.iterdir():
             if child.is_file() and child.suffix == ".md":
-                self.process_markdown_file(child, base_dir)
+                self.process_markdown_file(child)
             elif child.is_dir():
-                self.process_markdown_files(child, base_dir)
+                self.process_markdown_files(child)
 
 
 def main(
