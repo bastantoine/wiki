@@ -5,7 +5,7 @@ title: ""
 <script setup>
 import { computed } from 'vue'
 import { useSidebar } from 'vitepress/theme'
-import { useRoute, useData } from 'vitepress'
+import { useRoute, useData, withBase } from 'vitepress'
 const { sidebarGroups } = useSidebar()
 const { path } = useRoute()
 
@@ -18,10 +18,11 @@ const getGroups = (sidebarGroups) => {
 }
 
 const recursiveGetGroups = (groupItem, groups) => {
-  groups[groupItem.link] = []
+  const link = withBase(groupItem.link)
+  groups[link] = []
   if (groupItem.items) {
     for (let childItem of groupItem.items) {
-      groups[groupItem.link].push({ text: childItem.text, link: childItem.link })
+      groups[link].push({ text: childItem.text, link: childItem.link })
       if (childItem.items) {
         recursiveGetGroups(childItem, groups)
       }
