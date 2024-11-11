@@ -11,7 +11,6 @@ import typer
 from jinja2 import Environment, FileSystemLoader
 from loguru import logger
 from slugify import slugify
-from typing_extensions import Annotated
 
 app = typer.Typer()
 
@@ -100,6 +99,14 @@ class Processor:
         for path in dir_src.iterdir():
             if path.is_dir():
                 if path.name in ignored_dirs:
+                    logger.debug(
+                        f"Ignoring dir {path.name} (found in list of ignored dirs: {ignored_dirs})"
+                    )
+                    continue
+                if (path / ".hide").exists():
+                    logger.debug(
+                        f"Ignoring dir {path.name} (found file {(path / '.hide')})"
+                    )
                     continue
                 self.copy_files(path, dir_target / path.name)
             else:
