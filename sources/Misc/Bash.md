@@ -1,3 +1,1 @@
-# Bash
-
 Random bash tips and tricks to (_try to_) use Bash properly and efficiently...
