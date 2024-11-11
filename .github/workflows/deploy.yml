@@ -42,7 +42,14 @@ jobs:
       - name: Install Python dependencies
         run: poetry install
       - name: Build files from sources
-        run: poetry run python main.py --ignored-dirs '.obsidian,.git' --verbose sources . build templates
+        run: |
+          poetry run python main.py \
+            --ignored-dirs '.obsidian,.git' \
+            --verbose \
+            --source-dir sources \
+            --base-dir . \
+            --template-dir templates \
+            build
       - name: Setup Node
         uses: actions/setup-node@v3
         with:

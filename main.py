@@ -11,6 +11,7 @@ import typer
 from jinja2 import Environment, FileSystemLoader
 from loguru import logger
 from slugify import slugify
+from typing_extensions import Annotated
 
 app = typer.Typer()
 
@@ -355,10 +356,10 @@ class Processor:
 
 
 def main(
-    source_dir: str,
-    base_dir: str,
     target_dir: str,
-    template_dir: str,
+    source_dir: t.Optional[str] = "./sources",
+    base_dir: t.Optional[str] = ".",
+    template_dir: t.Optional[str] = "./templates",
     ignored_dirs: t.Optional[str] = "",
     format: t.Optional[bool] = True,
     verbose: t.Optional[bool] = False,
