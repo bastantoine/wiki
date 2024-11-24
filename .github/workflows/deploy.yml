@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
       - name: Run image
@@ -34,7 +34,7 @@ jobs:
         run: |
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Cache Python deps
         with:
           path: ./.venv
@@ -51,12 +51,12 @@ jobs:
             --template-dir templates \
             build
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
       - name: Install Node dependencies
         run: npm ci
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Cache Node deps
         with:
           path: ./node_modules
@@ -68,7 +68,7 @@ jobs:
       - name: Build static files
         run: npm run docs:build
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: .vitepress/dist
 
@@ -80,4 +80,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
