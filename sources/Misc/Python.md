@@ -10,3 +10,4 @@ export TMPDIR=$HOME/.piptmp
 mkdir -p $TMPDIR
 pip install ...
 ```
+[\[src\]](https://stackoverflow.com/questions/40755610/ioerror-errno-28-no-space-left-on-device-while-installing-tensorflow)
