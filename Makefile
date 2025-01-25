@@ -16,8 +16,8 @@ build-sources:
             --verbose \
             --base-dir . \
             --source-dir sources \
-            --template-dir templates \
-            build
+            --target-dir build \
+            --template-dir templates
 
 build-static:
 	@npm run docs:build

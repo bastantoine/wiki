@@ -372,7 +372,7 @@ class Processor:
 
 
 def main(
-    target_dir: str,
+    target_dir: t.Optional[str] = "./build",
     source_dir: t.Optional[str] = "./sources",
     base_dir: t.Optional[str] = ".",
     template_dir: t.Optional[str] = "./templates",
