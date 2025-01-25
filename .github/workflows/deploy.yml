@@ -54,10 +54,6 @@ jobs:
         with:
           path: ./node_modules
           key: venv-${{ hashFiles('package-lock.json') }}
-      - name: Prepare workspace
-        run: |
-          mv build wiki
-          mv wiki/links.json .vitepress/links.json
       - name: Build static files
         run: make build-static
       - name: Upload artifact
