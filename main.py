@@ -174,7 +174,14 @@ class Processor:
                 template_file = "root-index.md.j2"
             else:
                 template_file = "index.md.j2"
+            logger.debug(
+                f"Adding index file in {self.relative_link(dir_src, self.target_dir)}, using {template_file}"
+            )
             copy(self.template_dir / template_file, dir_src / "index.md")
+        else:
+            logger.debug(
+                f"Index file already exists in {self.relative_link(dir_src, self.target_dir)}, skipping"
+            )
 
     def generate_links_config(self, dir_src: Path):
         def generate_links_config_of_item(item: Path, index: int) -> LinkConfig:
@@ -237,7 +244,9 @@ class Processor:
             for f in glob(str(self.target_dir / f"**/{filename}*"), recursive=True)
         ]
         files = [f for f in files if f.is_file()]
-        logger.debug(f"Found {[str(f) for f in files]} for {filename}")
+        logger.debug(
+            f"Found {[str(f) for f in files] if files else 'no match'} for {filename}"
+        )
         if files:
             return str(files[0].relative_to(self.target_dir))
         return ""
