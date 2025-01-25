@@ -18,6 +18,7 @@ build-sources:
             --source-dir sources \
             --target-dir build \
             --template-dir templates
+	@mv build/links.json .vitepress/links.json
 
 build-static:
 	@npm run docs:build
