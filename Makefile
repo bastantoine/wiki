@@ -1,4 +1,5 @@
 .DEFAULT_GOAL := help
+.PHONY: help build-sources build-static build dev run clean
 
 help:
 	@echo 'Available targets:'
@@ -7,8 +8,7 @@ help:
 	@echo '  build         - Build sources and static files'
 	@echo '  dev           - Build sources and run the development server'
 	@echo '  run           - Run the development server'
-
-
+	@echo '  clean         - Clean the built files'
 
 build-sources:
 	@poetry run python main.py \
@@ -30,3 +30,8 @@ dev: build-sources
 
 run:
 	@npm run docs:dev
+
+clean:
+	@rm -rf build
+	@rm -rf .vitepress/dist
+	@rm -rf .vitepress/links.json
