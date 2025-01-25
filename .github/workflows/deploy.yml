@@ -42,14 +42,7 @@ jobs:
       - name: Install Python dependencies
         run: poetry install
       - name: Build files from sources
-        run: |
-          poetry run python main.py \
-            --ignored-dirs '.obsidian,.git' \
-            --verbose \
-            --source-dir sources \
-            --base-dir . \
-            --template-dir templates \
-            build
+        run: make build-sources
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -66,7 +59,7 @@ jobs:
           mv build wiki
           mv wiki/links.json .vitepress/links.json
       - name: Build static files
-        run: npm run docs:build
+        run: make build-static
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
