@@ -78,6 +78,6 @@ tar -xf <my-archive.tar> <file1> <dir1>
 
 ## Other
 
-To manipulate `.tar.gz` archives, add the `-z` option to al commands.
+To manipulate `.tar.gz` archives, add the `-z` option to all commands.
 
-By default, all commands will read from stdin or write to stdout, allowing incoming and outgoing piping. To read to or from an existing archive, use the `--file`/`-f` option.
+By default, all commands will read from `stdin` or write to `stdout`, allowing incoming and outgoing piping. To read to or from an existing archive, use the `--file`/`-f` option.
