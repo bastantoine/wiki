@@ -1,0 +1,43 @@
+---
+title: ""
+---
+
+<script setup>
+import { computed } from 'vue'
+import { useSidebar } from 'vitepress/theme'
+import { useRoute, useData, withBase } from 'vitepress'
+const { sidebarGroups } = useSidebar()
+const { path } = useRoute()
+
+const getGroups = (sidebarGroups) => {
+  let groups = {}
+  for (let item of sidebarGroups) {
+    recursiveGetGroups(item, groups)
+  }
+  return groups
+}
+
+const recursiveGetGroups = (groupItem, groups) => {
+  const link = withBase(groupItem.link)
+  groups[link] = []
+  if (groupItem.items) {
+    for (let childItem of groupItem.items) {
+      groups[link].push({ text: childItem.text, link: withBase(childItem.link) })
+      if (childItem.items) {
+        recursiveGetGroups(childItem, groups)
+      }
+    }
+  }
+}
+
+const groups = getGroups(sidebarGroups.value)
+const childItems = computed(() => groups[path])
+</script>
+
+# {{ $frontmatter.title }}
+
+<ol>
+  <li v-for="value in childItems">
+    <a :href=value.link>{{ value.text }}</a>
+  </li>
+</ol>
