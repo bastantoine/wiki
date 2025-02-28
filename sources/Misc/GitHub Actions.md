@@ -9,3 +9,29 @@ Things to note:
 - The directory is cleared at the start and end of each job, only if the runner's user account have permission to delete them.
 
 [\[src\]](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/accessing-contextual-information-about-workflow-runs#runner-context)
+
+## Using outputs to pass data between jobs
+
+```yaml
+name: Test
+
+on:
+  push:
+
+jobs:
+  job_1:
+    outputs:
+      version: ${{ steps.step_1.outputs.version }}
+    steps:
+      - name: Format version
+        id: step_1
+        run: |
+          VERSION=${{ github.ref_name }}
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+  job_2:
+    needs: [job_1]
+    steps:
+      - run: |
+          echo "version=${{ needs.job_1.outputs.version }}"
+```
