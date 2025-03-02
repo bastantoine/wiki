@@ -63,7 +63,7 @@ class Processor:
 
         # Add title of files in frontmatter of Markdownfiles
         logger.info("Adding title of files to frontmatters")
-        self.add_frontmatter_titles(self.target_dir)
+        self.add_frontmatter(self.target_dir)
 
         # Slugify all folders and files
         logger.info("Slugifying folders and files names")
@@ -112,7 +112,7 @@ class Processor:
             else:
                 copy(path, dir_target / path.name)
 
-    def add_frontmatter_title(self, file: Path):
+    def _add_frontmatter(self, file: Path):
         with open(file) as f:
             post = frontmatter.load(f)
         if not post.metadata.get("title"):
@@ -128,12 +128,12 @@ class Processor:
             with open(file, "w") as f:
                 f.write(frontmatter.dumps(post))
 
-    def add_frontmatter_titles(self, dir_src: Path):
+    def add_frontmatter(self, dir_src: Path):
         for item in dir_src.iterdir():
             if item.is_dir():
-                self.add_frontmatter_titles(item)
+                self.add_frontmatter(item)
             elif item.suffix == ".md":
-                self.add_frontmatter_title(item)
+                self._add_frontmatter(item)
 
     def slugify_path(self, path: Path) -> Path:
         if path.is_dir():
