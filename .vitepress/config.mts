@@ -17,6 +17,7 @@ export default defineConfig({
       message: 'Built using <a href="https://github.com/vuejs/vitepress">VitePress</a>. Released under the MIT License.',
       copyright: 'Copyright © 2019-present Bastien ANTOINE'
     },
+    outline: 'deep',
   },
   markdown: {
     config(md) {
