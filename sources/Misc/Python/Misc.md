@@ -16,7 +16,7 @@ pip install ...
 
 Python comes with a builtin HTTP server that can be used to serve files:
 
-```
+```bash
 python -m http.server
 ```
 
@@ -24,19 +24,19 @@ Default behaviour is to bind on `0.0.0.0` and listen on `8000`, and serve the fi
 
 To change the bind address, use the `-b, --bind` option
 
-```
+```bash
 python -m http.server --bind 127.0.0.1
 ```
 
 To change the port it listens on, provide it as parameter:
 
-```
+```bash
 python -m http.server 9000
 ```
 
 To serve a specific folder, use the `-d, --directory` option:
 
-```
+```bash
 python -m http.server --directory /tmp/
 ```
 
