@@ -11,3 +11,33 @@ mkdir -p $TMPDIR
 pip install ...
 ```
 [\[src\]](https://stackoverflow.com/questions/40755610/ioerror-errno-28-no-space-left-on-device-while-installing-tensorflow)
+
+## Serving files over HTTP
+
+Python comes with a builtin HTTP server that can be used to serve files:
+
+```
+python -m http.server
+```
+
+Default behaviour is to bind on `0.0.0.0` and listen on `8000`, and serve the files in the current directory.
+
+To change the bind address, use the `-b, --bind` option
+
+```
+python -m http.server --bind 127.0.0.1
+```
+
+To change the port it listens on, provide it as parameter:
+
+```
+python -m http.server 9000
+```
+
+To serve a specific folder, use the `-d, --directory` option:
+
+```
+python -m http.server --directory /tmp/
+```
+
+[\[src\]](https://docs.python.org/3/library/http.server.html#command-line-interface)
