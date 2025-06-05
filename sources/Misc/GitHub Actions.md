@@ -47,4 +47,4 @@ ${{ github.ref != 'refs/heads/master' && 'true' || 'false' }}
 Things to note:
 - The second part of the `AND` must be truthy, otherwise the second part of the `OR` will always be returned.
 
-[\[src`]](https://github.com/orgs/community/discussions/26738)
+[\[src\]](https://github.com/orgs/community/discussions/26738)
