@@ -147,3 +147,21 @@ This will strip all leading tabs, allowing the input to be more readable visuall
 
 Note though that this strips only leading tabs, but not spaces.
 
+# Showing disk usage
+
+To show disk usage, you can use `df` and `du`:
+
+1. To show free space over all mounted drives:
+   ```shell
+   df -h
+   ```
+
+2. To check the size of a directory:
+   ```shell
+   du -sh /path/to/directory
+   ```
+
+3. To list sizes of all subdirectories:
+   ```shell
+   du -h --max-depth=1 /path/to/directory
+   ```
