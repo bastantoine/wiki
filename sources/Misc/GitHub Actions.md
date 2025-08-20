@@ -48,3 +48,9 @@ Things to note:
 - The second part of the `AND` must be truthy, otherwise the second part of the `OR` will always be returned.
 
 [\[src\]](https://github.com/orgs/community/discussions/26738)
+
+## Checking if the action is running in default branch
+
+```
+github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+```
