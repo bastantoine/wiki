@@ -54,3 +54,14 @@ Things to note:
 ```
 github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
 ```
+
+## Skipping trigger of workflow upon commit push
+
+To skip the trigger of a workflow when a commit is pushed, include one of the following in the commit message:
+- `[skip ci]`
+- `[ci skip]`
+- `[no ci]`
+- `[skip actions]`
+- `[actions skip]`
+
+[\[src\]](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs)
