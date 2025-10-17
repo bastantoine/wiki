@@ -41,3 +41,19 @@ python -m http.server --directory /tmp/
 ```
 
 [\[src\]](https://docs.python.org/3/library/http.server.html#command-line-interface)
+
+## Dump attributes and values of a given object
+
+```python
+def dump(obj):
+    from pprint import pprint
+    attrs = [attr for attr in dir(obj) if not attr.startswith("_")]
+    res = {}
+    for attr in attrs:
+        try:
+            value = getattr(obj, attr)
+        except Exception as e:
+            value = f"<Error retrieving attribute: {e}>"
+        res[attr] = value
+    pprint(res)
+```
