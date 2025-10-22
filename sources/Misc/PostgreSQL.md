@@ -37,7 +37,7 @@ db=> \d
  public | pg_stat_statements_info            | view     | postgres
 ```
 
- ## Describing schema of a table
+## Describing schema of a table
 
 ```
 $ psql postgresql://username:password@hostname/db
