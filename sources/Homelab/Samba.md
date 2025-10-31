@@ -25,7 +25,7 @@ Configure the shares:
 ```ini
 [<share name>]
   comment= <Share comment>
-  path = </share/path>
+  path = </share/path/>
   valid users = @users
   force group = users
   create mask = 0660
@@ -35,7 +35,7 @@ Configure the shares:
 
 ### Ensuring maximal compatibility with macOS
 
-Additional configuration is required to ensure maximal compatiblity with macOS hosts:
+Additional configuration is required to ensure maximal compatiblity with macOS clients:
 
 ```ini
 min protocol = SMB3
