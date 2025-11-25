@@ -45,15 +45,25 @@ python -m http.server --directory /tmp/
 ## Dump attributes and values of a given object
 
 ```python
-def dump(obj):
+def dump(obj, iterable=True):
     from pprint import pprint
-    attrs = [attr for attr in dir(obj) if not attr.startswith("_")]
-    res = {}
-    for attr in attrs:
-        try:
-            value = getattr(obj, attr)
-        except Exception as e:
-            value = f"<Error retrieving attribute: {e}>"
-        res[attr] = value
-    pprint(res)
+    def _dump(o):
+        attrs = [attr for attr in dir(o) if not attr.startswith("_")]
+        res = {}
+        for attr in attrs:
+            try:
+                value = getattr(o, attr)
+            except Exception as e:
+                value = f"<Error retrieving attribute: {e}>"
+            res[attr] = value
+        pprint(res)
+    if not iterable:
+        _dump(obj)
+        return
+    try:
+        iterator = iter(obj)
+        for item in iterator:
+            _dump(item)
+    except TypeError:
+        _dump(obj)
 ```
