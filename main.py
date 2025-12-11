@@ -32,7 +32,7 @@ class Processor:
         source_dir: Path,
         template_dir: Path,
         target_dir: str,
-        ignored_dirs: [str],
+        ignored_dirs: list[str],
         format: bool,
     ) -> None:
         self.base_dir = base_dir
@@ -85,7 +85,7 @@ class Processor:
         path = Path(path)
         return path.relative_to(relative or self.base_dir)
 
-    def copy_files(self, dir_src: Path, dir_target: Path, ignored_dirs: [str] = []):
+    def copy_files(self, dir_src: Path, dir_target: Path, ignored_dirs: list[str] = []):
         # Delete the source dir first
         if dir_target.exists():
             logger.debug("Cleaning target dir")
@@ -326,6 +326,22 @@ class Processor:
             offset += 1
         return "\n".join(lines)
 
+    def process_collapsibles(self, content: str, filepath: Path | str) -> str:
+        if content.find("<details>") == -1:
+            # No collapsible block in the file, no need to go any further
+            return content
+
+        # Pattern to match <details><summary>[title]</summary>\n\n[content]\n</details>
+        pattern = r"<details>\s*<summary>(.*?)</summary>\s*(.*?)\s*</details>"
+
+        def replace_collapsible(match):
+            title = match.group(1).strip()
+            block_content = match.group(2).strip()
+            return f"::: details {title}\n{block_content}\n:::"
+
+        content = re.sub(pattern, replace_collapsible, content, flags=re.DOTALL)
+        return content
+
     def process_headers(self, content: str, filepath: Path | str) -> str:
         if content.find("#") == -1:
             # No headers in the file, no need to go any further
@@ -348,6 +364,7 @@ class Processor:
 
         for f in [
             self.process_links,
+            self.process_collapsibles,
             self.process_citations,
             self.process_headers,
         ]:
