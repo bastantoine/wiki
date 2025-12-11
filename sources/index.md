@@ -1,6 +1,8 @@
 ---
 layout: doc
 title: 'Home'
+prev: false
+next: false
 ---
 
 # Welcome home!
