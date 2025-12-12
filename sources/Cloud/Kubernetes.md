@@ -62,7 +62,7 @@ The `kube-controller-manager` comes with builtin controllers to manage the stand
 
 [\[src\]](https://kubernetes.io/docs/concepts/architecture/controller/)
 
-## The kubernetes resources
+## Kubernetes base resources
 
 <!-- Pod, Deployment, Replicaset, Statefulset, Configmap, Secrets, Service, Ingress, DaemonSet, Jobs, CronJobs, Service accounts -->
 
