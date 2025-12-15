@@ -32,13 +32,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: 'npm'
       - name: Install Node dependencies
         run: npm ci
-      - uses: actions/cache@v4
-        name: Cache Node deps
-        with:
-          path: ./node_modules
-          key: venv-${{ hashFiles('package-lock.json') }}
       - name: Build wiki
         run: make build
       - name: Upload artifact
