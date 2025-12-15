@@ -19,6 +19,11 @@ export default withMermaid(
         copyright: "Copyright © 2019-present Bastien ANTOINE",
       },
       outline: "deep",
+      editLink: {
+        pattern: ({ frontmatter }) => {
+          return `https://github.com/bastantoine/wiki/edit/main/sources/${frontmatter.source}`;
+        },
+      },
     },
     markdown: {
       config(md) {

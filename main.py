@@ -115,16 +115,18 @@ class Processor:
     def _add_frontmatter(self, file: Path):
         with open(file) as f:
             post = frontmatter.load(f)
-        if not post.metadata.get("title"):
+        if not post.metadata.get("title") or not post.metadata.get("source"):
             if file.name == "index.md":
                 # With an index.md file, the title is the name of the folder, before being sluggified
                 title = file.parts[-2]
             else:
                 title = file.stem
-            logger.debug(
-                f'Adding title "{title}" to "{self.relative_link(file, self.target_dir)}"'
-            )
-            post.metadata["title"] = title
+            relative_path = self.relative_link(file, self.target_dir)
+            logger.debug(f'Updating frontmatter for "{relative_path}"')
+            if not post.metadata.get("title"):
+                post.metadata["title"] = title
+            if not post.metadata.get("source"):
+                post.metadata["source"] = str(relative_path)
             with open(file, "w") as f:
                 f.write(frontmatter.dumps(post))
 
