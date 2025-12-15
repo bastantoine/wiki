@@ -11,7 +11,7 @@ help:
 	@echo '  clean         - Clean the built files'
 
 build-sources:
-	@poetry run python main.py \
+	@python main.py \
             --ignored-dirs '.obsidian,.git' \
             --verbose \
             --base-dir . \
