@@ -224,7 +224,10 @@ class Processor:
 
         config: list[LinkConfig] = []
         for child in dir_src.iterdir():
-            if child.is_file() and not child.name.endswith("md"):
+            if child.is_file() and (
+                not child.name.endswith("md") or child.name == "index.md"
+            ):
+                # Skip non-markdown files and root index.md file
                 continue
             child_config = generate_links_config_of_item(child, index=0)
             if "collapsed" in child_config.keys():
