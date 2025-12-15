@@ -1,0 +1,5 @@
+python-frontmatter
+python-slugify
+typer[all]
+loguru
+jinja2
