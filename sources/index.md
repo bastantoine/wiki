@@ -3,6 +3,7 @@ layout: doc
 title: 'Home'
 prev: false
 next: false
+editLink: false
 ---
 
 # Welcome home!
