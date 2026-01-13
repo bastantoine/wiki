@@ -165,3 +165,24 @@ To show disk usage, you can use `df` and `du`:
    ```shell
    du -h --max-depth=1 /path/to/directory
    ```
+
+# Generating random strings
+
+Few options:
+
+- Random string of 12 base64 chars:
+  ```
+  openssl rand -base64 12
+  ```
+
+- Random string of 12 bytes in hexadecimal:
+  ```
+  openssl rand -hex 12
+  ```
+
+- Random string of 13 chars with only lower, uppercase letters and digits:
+  ```
+  tr -dc A-Za-z0-9 </dev/urandom | head -c 13; echo
+  ```
+
+[\[src\]](https://unix.stackexchange.com/questions/230673/how-to-generate-a-random-string)
