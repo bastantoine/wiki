@@ -1,0 +1,12 @@
+---
+title: ""
+---
+
+# Glossary
+{% for prefix, links in glossary.items() %}
+
+### {{ prefix }}
+
+- {% for link in links -%}[{{ link }}]({{ link }}){%- endfor -%}
+
+{%- endfor -%}

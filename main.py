@@ -61,6 +61,9 @@ class Processor:
         logger.info("Adding index.md files to folders")
         self.add_index_files(self.target_dir)
 
+        logger.info("Processing glossary index")
+        self.process_glossary_index(self.target_dir)
+
         # Add title of files in frontmatter of Markdownfiles
         logger.info("Adding title of files to frontmatters")
         self.add_frontmatter(self.target_dir)
@@ -172,6 +175,10 @@ class Processor:
         for dir in dirs:
             self.add_index_files(dir)
         if not any([item.name == "index.md" for item in files]):
+            if dir_src.name == "Glossary":
+                # Glossary folder has a specific template and is processed separately,
+                # so we can skip it here.
+                return
             if dir_src == self.target_dir:
                 template_file = "root-index.md.j2"
             else:
@@ -390,6 +397,20 @@ class Processor:
                 self.process_markdown_file(child)
             elif child.is_dir():
                 self.process_markdown_files(child)
+
+    def process_glossary_index(self, dir: Path):
+        dir = dir / "Glossary"
+        files = sorted(
+            [f for f in (dir).iterdir() if f.is_file() and f.name != "index.md"]
+        )
+        d = {}
+        for file in files:
+            d.setdefault(file.name[0].upper(), []).append(file.stem)
+        environment = Environment(loader=FileSystemLoader(self.template_dir))
+        template = environment.get_template("index-glossary.md.j2")
+        content = template.render(glossary=d)
+        with open(dir / "index.md", "w") as f:
+            f.write(content)
 
 
 def main(
