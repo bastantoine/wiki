@@ -400,6 +400,11 @@ class Processor:
 
     def process_glossary_index(self, dir: Path):
         dir = dir / "Glossary"
+        if not dir.exists():
+            logger.warning(
+                f"Glossary folder not found in {self.relative_link(self.target_dir)}, skipping glossary index generation"
+            )
+            return
         files = sorted(
             [f for f in (dir).iterdir() if f.is_file() and f.name != "index.md"]
         )
