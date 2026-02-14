@@ -112,30 +112,30 @@ class Processor:
             else:
                 copy(path, dir_target / path.name)
 
-    def _add_frontmatter(self, file: Path):
-        with open(file) as f:
-            post = frontmatter.load(f)
-        if not post.metadata.get("title") or not post.metadata.get("source"):
-            if file.name == "index.md":
-                # With an index.md file, the title is the name of the folder, before being sluggified
-                title = file.parts[-2]
-            else:
-                title = file.stem
-            relative_path = self.relative_link(file, self.target_dir)
-            logger.debug(f'Updating frontmatter for "{relative_path}"')
-            if not post.metadata.get("title"):
-                post.metadata["title"] = title
-            if not post.metadata.get("source"):
-                post.metadata["source"] = str(relative_path)
-            with open(file, "w") as f:
-                f.write(frontmatter.dumps(post))
-
     def add_frontmatter(self, dir_src: Path):
+        def _add_frontmatter(file: Path):
+            with open(file) as f:
+                post = frontmatter.load(f)
+            if not post.metadata.get("title") or not post.metadata.get("source"):
+                if file.name == "index.md":
+                    # With an index.md file, the title is the name of the folder, before being sluggified
+                    title = file.parts[-2]
+                else:
+                    title = file.stem
+                relative_path = self.relative_link(file, self.target_dir)
+                logger.debug(f'Updating frontmatter for "{relative_path}"')
+                if not post.metadata.get("title"):
+                    post.metadata["title"] = title
+                if not post.metadata.get("source"):
+                    post.metadata["source"] = str(relative_path)
+                with open(file, "w") as f:
+                    f.write(frontmatter.dumps(post))
+
         for item in dir_src.iterdir():
             if item.is_dir():
                 self.add_frontmatter(item)
             elif item.suffix == ".md":
-                self._add_frontmatter(item)
+                _add_frontmatter(item)
 
     def slugify_path(self, path: Path) -> Path:
         if path.is_dir():
