@@ -224,7 +224,7 @@ class Processor:
                 )
             return item_config
 
-        config: list[LinkConfig] = []
+        config: dict[str, LinkConfig] = {}
         for child in dir_src.iterdir():
             if child.is_file() and (
                 not child.name.endswith("md") or child.name == "index.md"
@@ -235,10 +235,9 @@ class Processor:
             if "collapsed" in child_config.keys():
                 if child_config.get("items"):
                     # Dir with not empty list of childs
-                    config.append(child_config)
+                    config[child_config["link"]] = child_config
             else:
-                config.append(child_config)
-        config = sorted(config, key=lambda item: item["text"])
+                config[child_config["link"]] = child_config
 
         with open(dir_src / "links.json", "w") as f:
             json.dump(config, f, indent=4, ensure_ascii=False)

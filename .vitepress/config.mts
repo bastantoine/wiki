@@ -12,6 +12,10 @@ export default withMermaid(
     base: "/wiki/",
     themeConfig: {
       sidebar: links,
+      nav: Object.entries(links).map(([_, v]) => ({
+        text: v.text,
+        link: v.link,
+      })),
       socialLinks: [{ icon: "github", link: "https://github.com/bastantoine" }],
       footer: {
         message:
@@ -41,5 +45,5 @@ export default withMermaid(
       // https://emersonbottero.github.io/vitepress-plugin-mermaid/
       class: "mermaid",
     },
-  })
+  }),
 );
