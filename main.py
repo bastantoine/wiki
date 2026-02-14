@@ -216,7 +216,7 @@ class Processor:
                     )
                     + "/"
                 ),
-                "collapsed": bool(index > 0),
+                "collapsed": bool(index > 1),
             }
             if child_items:
                 item_config["items"] = sorted(
