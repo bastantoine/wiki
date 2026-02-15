@@ -61,12 +61,12 @@ class Processor:
         logger.info("Adding index.md files to folders")
         self.add_index_files(self.target_dir)
 
-        logger.info("Processing glossary index")
-        self.process_glossary_index(self.target_dir)
-
         # Add title of files in frontmatter of Markdownfiles
         logger.info("Adding title of files to frontmatters")
         self.add_frontmatter(self.target_dir)
+
+        logger.info("Processing glossary files")
+        self.process_glossary_section(self.target_dir)
 
         # Slugify all folders and files
         logger.info("Slugifying folders and files names")
@@ -398,13 +398,21 @@ class Processor:
             elif child.is_dir():
                 self.process_markdown_files(child)
 
-    def process_glossary_index(self, dir: Path):
+    def process_glossary_section(self, dir: Path):
         dir = dir / "Glossary"
         if not dir.exists():
             logger.warning(
-                f"Glossary folder not found in {self.relative_link(self.target_dir)}, skipping glossary index generation"
+                f"Glossary folder not found in {self.relative_link(self.target_dir)}, skipping glossary files processing"
             )
             return
+
+        logger.info("Processing glossary index")
+        self.process_glossary_index(dir)
+
+        logger.info("Processing glossary files")
+        self.process_glossary_files(dir)
+
+    def process_glossary_index(self, dir: Path):
         files = sorted(
             [f for f in (dir).iterdir() if f.is_file() and f.name != "index.md"]
         )
@@ -416,6 +424,27 @@ class Processor:
         content = template.render(glossary=d)
         with open(dir / "index.md", "w") as f:
             f.write(content)
+
+    def process_glossary_files(self, dir: Path):
+        for file in dir.iterdir():
+            if file.is_file() and file.name != "index.md":
+                with open(file) as f:
+                    post = frontmatter.load(f)
+                metadata = post.metadata
+                metadata["prev"] = False
+                metadata["next"] = False
+
+                # The related_to field in the frontmatter can be a string or a list of strings, and
+                # each string is a link to another glossary term. We want to format it as a markdown
+                # list of links to these terms.
+                related = metadata.get("related_to", [])
+                if isinstance(related, str):
+                    related = [related]
+                related = "\n".join(f"- [{r}]({r})" for r in related)
+                f"""{metadata.get('title', file.stem)}\n\n{post.content}"""
+                post.content = f"{post.content}\n\n### Related terms\n\n{related}"
+                with open(file, "w") as f:
+                    f.write(frontmatter.dumps(post))
 
 
 def main(
