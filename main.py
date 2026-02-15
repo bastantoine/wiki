@@ -406,45 +406,45 @@ class Processor:
             )
             return
 
+        def process_glossary_index():
+            files = sorted(
+                [f for f in (dir).iterdir() if f.is_file() and f.name != "index.md"]
+            )
+            d = {}
+            for file in files:
+                d.setdefault(file.name[0].upper(), []).append(file.stem)
+            environment = Environment(loader=FileSystemLoader(self.template_dir))
+            template = environment.get_template("index-glossary.md.j2")
+            content = template.render(glossary=d)
+            with open(dir / "index.md", "w") as f:
+                f.write(content)
+
+        def process_glossary_files():
+            for file in dir.iterdir():
+                if file.is_file() and file.name != "index.md":
+                    with open(file) as f:
+                        post = frontmatter.load(f)
+                    metadata = post.metadata
+                    metadata["prev"] = False
+                    metadata["next"] = False
+
+                    # The related_to field in the frontmatter can be a string or a list of strings, and
+                    # each string is a link to another glossary term. We want to format it as a markdown
+                    # list of links to these terms.
+                    related = metadata.get("related_to", [])
+                    if isinstance(related, str):
+                        related = [related]
+                    related = "\n".join(f"- [{r}]({r})" for r in related)
+                    f"""{metadata.get('title', file.stem)}\n\n{post.content}"""
+                    post.content = f"{post.content}\n\n### Related terms\n\n{related}"
+                    with open(file, "w") as f:
+                        f.write(frontmatter.dumps(post))
+
         logger.info("Processing glossary index")
-        self.process_glossary_index(dir)
+        process_glossary_index()
 
         logger.info("Processing glossary files")
-        self.process_glossary_files(dir)
-
-    def process_glossary_index(self, dir: Path):
-        files = sorted(
-            [f for f in (dir).iterdir() if f.is_file() and f.name != "index.md"]
-        )
-        d = {}
-        for file in files:
-            d.setdefault(file.name[0].upper(), []).append(file.stem)
-        environment = Environment(loader=FileSystemLoader(self.template_dir))
-        template = environment.get_template("index-glossary.md.j2")
-        content = template.render(glossary=d)
-        with open(dir / "index.md", "w") as f:
-            f.write(content)
-
-    def process_glossary_files(self, dir: Path):
-        for file in dir.iterdir():
-            if file.is_file() and file.name != "index.md":
-                with open(file) as f:
-                    post = frontmatter.load(f)
-                metadata = post.metadata
-                metadata["prev"] = False
-                metadata["next"] = False
-
-                # The related_to field in the frontmatter can be a string or a list of strings, and
-                # each string is a link to another glossary term. We want to format it as a markdown
-                # list of links to these terms.
-                related = metadata.get("related_to", [])
-                if isinstance(related, str):
-                    related = [related]
-                related = "\n".join(f"- [{r}]({r})" for r in related)
-                f"""{metadata.get('title', file.stem)}\n\n{post.content}"""
-                post.content = f"{post.content}\n\n### Related terms\n\n{related}"
-                with open(file, "w") as f:
-                    f.write(frontmatter.dumps(post))
+        process_glossary_files()
 
 
 def main(
