@@ -10,6 +10,6 @@ next: false
 
 ### {{ prefix }}
 
-- {% for link in links -%}[{{ link }}]({{ link }}){%- endfor -%}
+- {% for link in links -%}{{ link | format_link }}{%- endfor -%}
 
 {%- endfor -%}

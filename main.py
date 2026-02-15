@@ -407,13 +407,27 @@ class Processor:
             return
 
         def process_glossary_index():
+            def format_link(link) -> str:
+                s = f"[{link['term']}]({link['term']})"
+                if link["summary"]:
+                    s += f": _{link['summary']}_"
+                return s
+
             files = sorted(
                 [f for f in (dir).iterdir() if f.is_file() and f.name != "index.md"]
             )
             d = {}
             for file in files:
-                d.setdefault(file.name[0].upper(), []).append(file.stem)
+                with open(file) as f:
+                    post = frontmatter.load(f)
+                d.setdefault(file.name[0].upper(), []).append(
+                    {
+                        "term": file.stem,
+                        "summary": post.metadata.get("summary"),
+                    }
+                )
             environment = Environment(loader=FileSystemLoader(self.template_dir))
+            environment.filters["format_link"] = format_link
             template = environment.get_template("index-glossary.md.j2")
             content = template.render(glossary=d)
             with open(dir / "index.md", "w") as f:
