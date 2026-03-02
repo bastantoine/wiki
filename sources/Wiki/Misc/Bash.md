@@ -186,3 +186,25 @@ Few options:
   ```
 
 [\[src\]](https://unix.stackexchange.com/questions/230673/how-to-generate-a-random-string)
+
+# Run `nslookup` with full URL
+
+`nslookup` only accepts FQDN, and not full URLs with scheme, path and query parameters. Below script parses a 
+
+```bash
+nslookup () {
+    if [ "$1" = "" ]; then
+        echo "Usage: nslookup <hostname>"
+        return 1
+    fi
+    s=$(cat <<EOL
+from urllib.parse import urlparse
+url = ('http://' + r'$1') if (not r'$1'.startswith(('http://', 'https://'))) else r'$1'
+print(urlparse(url).netloc.split(':')[0])
+EOL
+)
+    host=$(python -c "$s")
+    command nslookup $host
+}
+```
+
