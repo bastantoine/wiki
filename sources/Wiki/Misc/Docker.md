@@ -1,3 +1,19 @@
+## Config tips and tricks
+
+### Changing default registry
+
+To change the default registry used by the Docker engine, edit the config file (under `/etc/docker/daemon.json` or `~/.config/docker/daemon.json` when running in rootless mode), and add the following:
+
+```json
+{
+	"registry-mirrors": ["https://my.mirror.example.com"]
+}
+```
+
+Restart the engine, and then following that, every pull of an image without a registry specified will use the configured registry.
+
+## Build mounts
+
 To mount files when building a Docker image, use the `RUN --mount` option.
 
 Multiple type are possible:
@@ -7,7 +23,7 @@ Multiple type are possible:
 4. `tmpfs`
 5. `ssh`
 
-## `RUN --mount=type=bind`
+### `RUN --mount=type=bind`
 Useful to mount regular file at build time while not needing a previous layer to copy them.
 
 ```Dockerfile
@@ -21,7 +37,7 @@ RUN cat /var/config/my-secret-file
 
 [\[src\]](https://docs.docker.com/reference/dockerfile/#run---mounttypebind)
 
-## `RUN --mount=type=secret`
+### `RUN --mount=type=secret`
 
 Secret mounts can be used to mount secret values, such as config files or env var needed to perform operations, while not having them available in the final image, as well as any intermediate layer built.
 
@@ -67,7 +83,7 @@ RUN --mount=type=secret,id=aws-key-id,env=AWS_ACCESS_KEY_ID \
 ```
 [\[src\]](https://docs.docker.com/build/building/secrets/)
 
-## `RUN --mount=type=cache`
+### `RUN --mount=type=cache`
 
 Cache mount can be used to mount cache for package manager and compilers.
 
