@@ -327,9 +327,12 @@ class Processor:
             ]
             for src, dst in [
                 ("note", "info"),
+                ("tip", "tip"),
+                ("important", "danger"),
                 ("warning", "warning"),
+                ("caution", "danger"),
             ]:
-                if cited_lines[0].startswith(f"[!{src}]"):
+                if cited_lines[0].lower().startswith(f"[!{src}]"):
                     cited_lines[0] = f"::: {dst}" + cited_lines[0][(len(f"[!{src}]")) :]
                     break
             cited_lines.append(":::")
