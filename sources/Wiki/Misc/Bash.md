@@ -208,3 +208,27 @@ EOL
 }
 ```
 
+# Reading inputs
+
+Reading inputs can be done using the `read` command.
+
+By default the value read is available in the `$REPLY` variable.
+
+It is possible to provide a custom variable for the output:
+
+```bash
+read $MY_OUTPUT_VAR
+```
+
+Few useful options:
+
+- `-r`: By default, `read` interprets the backslash as an escape character, which can cause unexpected behavior. `-r` disable backslash escaping.
+- `-s`: The option allows to suppress terminal echoing.
+- `-p`: The option allows to display a prompt before reading. The prompt is printed before read executes and does not include a newline.
+
+    ```bash
+    read -r -s -p "Enter your password: "
+    ```
+
+
+[\[more\]](https://linuxize.com/post/bash-read/)
